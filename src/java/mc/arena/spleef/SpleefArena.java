@@ -4,6 +4,16 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.MatchState;
 import mc.alk.arena.objects.StateOption;
@@ -26,17 +36,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import org.bukkit.plugin.Plugin;
 
 public class SpleefArena extends Arena {
 
@@ -65,6 +65,16 @@ public class SpleefArena extends Arena {
     Integer islandTimer = null;
     Map<ArenaPlayer, Fails> movedPlayers = Collections.synchronizedMap(
             new HashMap<ArenaPlayer, Fails>());
+    
+    Plugin plugin;
+    
+    /**
+     * This constructor forces servers to use the latest version of BattleArena.
+     * @param reference A plugin instance.
+     */
+    public SpleefArena(Plugin reference) {
+        this.plugin = reference;
+    }
 
     public static class Fails {
 

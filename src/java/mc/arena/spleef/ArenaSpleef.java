@@ -1,10 +1,12 @@
 package mc.arena.spleef;
 
 import mc.alk.arena.BattleArena;
+import mc.alk.arena.objects.arenas.ArenaFactory;
 import mc.alk.arena.util.Log;
-import mc.alk.arena.util.plugins.WorldGuardUtil;
 import mc.arena.spleef.executors.SpleefExecutor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ArenaSpleef extends JavaPlugin {
@@ -15,15 +17,20 @@ public class ArenaSpleef extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        /// We need worldguard/worldedit, load them in
-        if (!WorldGuardUtil.hasWorldGuard()) {
-            Log.err("Arena Spleef needs WorldEdit and WorldGuard to function!");
+        // ArenaSpleef requires BattleArena, WorldEdit, WorldGuard:
+        Plugin ba = Bukkit.getPluginManager().getPlugin("BattleArena");
+        Plugin we = Bukkit.getPluginManager().getPlugin("WorldEdit");
+        Plugin wg = Bukkit.getPluginManager().getPlugin("WorldGuard");
+        if (!ba.isEnabled() || !we.isEnabled() || !wg.isEnabled()) {
+            Log.err("ArenaSpleef needs BattleArena, WorldEdit, and WorldGuard.");
+            Log.info("disabling ArenaSpleef");
             setEnabled(false);
             return;
         }
 
         /// Register our spleef type
-        BattleArena.registerCompetition(this, "Spleef", "spleef", SpleefArena.class, new SpleefExecutor());
+        ArenaFactory factory = new SpleefArenaFactory(this);
+        BattleArena.registerCompetition(this, "Spleef", "spleef", factory, new SpleefExecutor());
 
         /// Load the Config
         loadConfig();
