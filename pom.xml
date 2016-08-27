@@ -8,51 +8,80 @@
     <name>ArenaSpleef</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <build.number>${env.BUILD_NUMBER}</build.number>
+        <craftbukkit.version>1.10.2-R0.1-SNAPSHOT</craftbukkit.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <url>http://maven.apache.org</url>
-    <!-- Locations for jar repositories -->
     <repositories>
         <repository>
-            <id>battleplugins-repo</id>
-            <url>http://server.battleplugins.com/maven/repository/</url>
-        </repository>
-        <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public</url>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
     </repositories>
-    <!-- Dependencies -->
     <dependencies>
-        <!-- Dependencies that have maven repos -->
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.2</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>${craftbukkit.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>    
+                    <groupId>net.md-5</groupId>
+                    <artifactId>bungeecord-chat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>${craftbukkit.version}</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>    
+                    <groupId>net.md-5</groupId>
+                    <artifactId>bungeecord-chat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
         <dependency>
             <groupId>mc.alk</groupId>
-            <artifactId>BattleArena</artifactId>
-            <version>3.9.9.11</version>
+            <artifactId>BattleArena-lite</artifactId>
+            <version>3.9.10.15</version>
             <scope>provided</scope>
         </dependency>
+        
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>5.8.1-SNAPSHOT</version>
+            <version>6.1.1-SNAPSHOT</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
-        <!-- unknown plugins that I had to add to the repo -->
-        <!-- test dependencies -->
+        
     </dependencies>
-    <!-- How we will compile the plugin -->
     <build>
-        <finalName>${project.name}</finalName>
+        <finalName>${project.name}.${project.version}-#${build.number}</finalName>
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
@@ -61,9 +90,7 @@
             </extension>
         </extensions>
         <defaultGoal>install</defaultGoal>
-        <!-- Where our source directory is -->
         <sourceDirectory>${basedir}/src/java</sourceDirectory>
-        <!-- Include all the resources we need -->
         <resources>
             <resource>
                 <targetPath>.</targetPath>
@@ -75,25 +102,6 @@
             </resource>
         </resources>
         <plugins>
-            <!-- Specify how we build the plugin.jar -->
-            <!-- 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
         </plugins>
     </build>
-    <distributionManagement>
-        <repository>
-            <id>battleplugins-repo</id>
-            <url>scp://server.battleplugins.com/var/www/server.battleplugins.com/htdocs/maven/repository</url>
-        </repository>
-    </distributionManagement>
 </project>

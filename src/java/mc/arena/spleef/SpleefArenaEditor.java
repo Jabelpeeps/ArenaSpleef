@@ -1,13 +1,13 @@
 package mc.arena.spleef;
 
-import mc.alk.arena.BattleArena;
-import mc.alk.arena.objects.arenas.Arena;
-import mc.alk.arena.util.plugins.WorldEditUtil;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.bukkit.selections.Selection;
+
+import mc.alk.arena.objects.arenas.Arena;
+import mc.alk.arena.plugins.WorldEditUtil;
+import mc.alk.arena.serializers.ArenaSerializer;
 
 public class SpleefArenaEditor {
 
@@ -30,7 +30,7 @@ public class SpleefArenaEditor {
         }
 
         arena.setRegion(sender, sel, layerIndex - 1);
-        BattleArena.saveArenas(ArenaSpleef.getSelf());
+        ArenaSerializer.saveArenas(ArenaSpleef.getSelf());
     }
 
     public void setRegen(Integer layerIndex, Integer regenTime) throws Exception {
@@ -41,7 +41,7 @@ public class SpleefArenaEditor {
             throw new SpleefException("&cYou can't set the regen time to less than 1 second!");
         }
         arena.setRegen(layerIndex - 1, regenTime);
-        BattleArena.saveArenas(ArenaSpleef.getSelf());
+        ArenaSerializer.saveArenas(ArenaSpleef.getSelf());
     }
 
     public void deleteRegen(Integer layerIndex) throws Exception {
@@ -49,6 +49,6 @@ public class SpleefArenaEditor {
             throw new SpleefException("&cBad layer index, 1-" + Defaults.MAX_LAYERS);
         }
         arena.deleteRegen(layerIndex - 1);
-        BattleArena.saveArenas(ArenaSpleef.getSelf());
+        ArenaSerializer.saveArenas(ArenaSpleef.getSelf());
     }
 }

@@ -1,13 +1,14 @@
 package mc.arena.spleef;
 
-import mc.alk.arena.BattleArena;
-import mc.alk.arena.objects.arenas.ArenaFactory;
-import mc.alk.arena.util.Log;
-import mc.arena.spleef.executors.SpleefExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import mc.alk.arena.controllers.APIRegistrationController;
+import mc.alk.arena.objects.arenas.ArenaFactory;
+import mc.alk.arena.util.Log;
+import mc.arena.spleef.executors.SpleefExecutor;
 
 public class ArenaSpleef extends JavaPlugin {
     
@@ -30,7 +31,7 @@ public class ArenaSpleef extends JavaPlugin {
 
         /// Register our spleef type
         ArenaFactory factory = new SpleefArenaFactory(this);
-        BattleArena.registerCompetition(this, "Spleef", "spleef", factory, new SpleefExecutor());
+        APIRegistrationController.registerCompetition(this, "Spleef", "spleef", factory, new SpleefExecutor());
 
         /// Load the Config
         loadConfig();

@@ -1,14 +1,15 @@
 package mc.arena.spleef.executors;
 
-import mc.alk.arena.executors.CustomCommandExecutor;
-import mc.alk.arena.executors.MCCommand;
-import mc.alk.arena.objects.arenas.Arena;
-import mc.arena.spleef.SpleefArenaEditor;
-import mc.arena.spleef.SpleefException;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import mc.alk.arena.executors.CustomCommandExecutor;
+import mc.alk.arena.executors.MCCommand;
+import mc.alk.arena.objects.arenas.Arena;
+import mc.alk.arena.util.MessageUtil;
+import mc.arena.spleef.SpleefArenaEditor;
+import mc.arena.spleef.SpleefException;
 
 public class SpleefExecutor extends CustomCommandExecutor {
 
@@ -22,12 +23,12 @@ public class SpleefExecutor extends CustomCommandExecutor {
         try {
             SpleefArenaEditor sae = new SpleefArenaEditor(arena);
             sae.setLayer(sender, layerIndex);
-            return sendMessage(sender, "&2Spleef Layer " + layerIndex + " has been created");
+            return MessageUtil.sendMessage(sender, "&2Spleef Layer " + layerIndex + " has been created");
         } catch (SpleefException e) {
-            return sendMessage(sender, e.getMessage());
+            return MessageUtil.sendMessage(sender, e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            return sendMessage(sender, ChatColor.RED + "Error creating region. " + e.getMessage());
+            return MessageUtil.sendMessage(sender, ChatColor.RED + "Error creating region. " + e.getMessage());
         }
     }
 
@@ -41,12 +42,12 @@ public class SpleefExecutor extends CustomCommandExecutor {
         try {
             SpleefArenaEditor sae = new SpleefArenaEditor(arena);
             sae.setRegen(layerIndex, regenTime);
-            return sendMessage(sender, "&2Spleef Layer " + layerIndex + " now regens every " + regenTime + " seconds");
+            return MessageUtil.sendMessage(sender, "&2Spleef Layer " + layerIndex + " now regens every " + regenTime + " seconds");
         } catch (SpleefException e) {
-            return sendMessage(sender, e.getMessage());
+            return MessageUtil.sendMessage(sender, e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            return sendMessage(sender, ChatColor.RED + "Error setting regen. " + e.getMessage());
+            return MessageUtil.sendMessage(sender, ChatColor.RED + "Error setting regen. " + e.getMessage());
         }
     }
 
@@ -60,12 +61,12 @@ public class SpleefExecutor extends CustomCommandExecutor {
         try {
             SpleefArenaEditor sae = new SpleefArenaEditor(arena);
             sae.deleteRegen(layerIndex);
-            return sendMessage(sender, "&2Spleef Layer " + layerIndex + " now no longer regens during the match");
+            return MessageUtil.sendMessage(sender, "&2Spleef Layer " + layerIndex + " now no longer regens during the match");
         } catch (SpleefException e) {
-            return sendMessage(sender, e.getMessage());
+            return MessageUtil.sendMessage(sender, e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            return sendMessage(sender, ChatColor.RED + "Error deleting regen. " + e.getMessage());
+            return MessageUtil.sendMessage(sender, ChatColor.RED + "Error deleting regen. " + e.getMessage());
         }
     }
 }
